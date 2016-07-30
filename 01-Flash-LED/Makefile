@@ -20,6 +20,7 @@ flash:
 	st-flash write $(TARGET) $(TARGET_ADDR)
 
 debug:
+	$(shell `ps | grep st-util | awk '{print $1}' | xargs kill -9`)
 	st-util &
 	ddd --debugger $(CROSS_COMPILE)gdb $(PROJECT).elf
 
