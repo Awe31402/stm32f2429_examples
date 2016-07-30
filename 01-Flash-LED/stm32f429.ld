@@ -40,6 +40,7 @@ SECTIONS
     *(.bss)
     _ebss = .;
     . = ALIGN(4);
+    _end = .;
   } >RAM
 
   _estack = ORIGIN(RAM) + LENGTH(RAM);
