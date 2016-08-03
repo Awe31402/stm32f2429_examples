@@ -1,6 +1,9 @@
 CROSS_COMPILE = arm-none-eabi-
 CC = $(CROSS_COMPILE)gcc
 
+CMSIS_PATH=../cmsis/
+PLATFORM=STM32f429disco
+
 CFLAGS = -g -fno-common -O0 \
 				-mcpu=cortex-m4 -mthumb \
 				-T stm32f429.ld -nostartfiles
@@ -10,7 +13,8 @@ TARGET = hello.bin
 all: $(TARGET)
 
 $(TARGET): main.c startup.c
-	$(CC) $(CFLAGS) $^ -o hello.elf
+	$(CC) $(CFLAGS) $^ -I$(CMSIS_PATH) -I$(CMSIS_PATH)$(PLATFORM) \
+		-o hello.elf
 	$(CROSS_COMPILE)objcopy -Obinary hello.elf hello.bin
 	$(CROSS_COMPILE)objdump -S hello.elf > hello.list
 
