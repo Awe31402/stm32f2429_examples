@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include "stm32f4xx.h"
-#include "cmsis.h"
 
 #define GPIO GPIOG
 #define NUMBER 13
@@ -44,7 +43,7 @@ void main(void)
   GpioPinInit();
   GPIO->ODR |= (1 << NUMBER);
   while (1) {
-    for (i = 0; i < 1200000; i++);
+    for (i = 0; i < 12000000; i++);
     GPIO->ODR ^= (1 << NUMBER);
   }
 }
