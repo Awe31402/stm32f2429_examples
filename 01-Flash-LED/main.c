@@ -1,13 +1,13 @@
 #include <stdint.h>
 #include "stm32f4xx.h"
 
-#define GPIO GPIOG
-#define NUMBER 13
+#define GPIO GPIOB
+#define NUMBER 6
 
 void GpioClockEnable()
 {
   /*Enable clock to GPIO port G*/
-  RCC->AHB1ENR |= 1 << 6;
+  RCC->AHB1ENR |= 1 << 1;
 }
 
 void GpioPinInit()
@@ -43,7 +43,7 @@ void main(void)
   GpioPinInit();
   GPIO->ODR |= (1 << NUMBER);
   while (1) {
-    for (i = 0; i < 12000000; i++);
+    for (i = 0; i < 120000; i++);
     GPIO->ODR ^= (1 << NUMBER);
   }
 }
