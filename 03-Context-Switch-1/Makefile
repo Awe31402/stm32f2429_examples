@@ -5,7 +5,11 @@ INCLUDE_PATH =../include
 CMSIS_PATH = $(INCLUDE_PATH)/cmsis
 HAL_PATH=$(INCLUDE_PATH)/stm32f4-hal
 
-DEFINE+=STM32F429xx
+DEFINE+=-DSTM32F429xx
+
+ifeq ($(BOARD_LED),y)
+	DEFINE+=-DBOARD_LED
+endif
 
 PLATFORM=STM32f429disco
 
@@ -19,7 +23,7 @@ TARGET = $(PROJECT).bin
 all: $(TARGET)
 
 $(TARGET): main.c startup.c context_switch.S
-	$(CC) $(CFLAGS) $^ -I$(CMSIS_PATH) -I$(HAL_PATH) -D$(DEFINE) \
+	$(CC) $(CFLAGS) $^ -I$(CMSIS_PATH) -I$(HAL_PATH) $(DEFINE) \
 		-o $(PROJECT).elf
 	$(CROSS_COMPILE)objcopy -Obinary $(PROJECT).elf $(PROJECT).bin
 	$(CROSS_COMPILE)objdump -S $(PROJECT).elf > $(PROJECT).list
